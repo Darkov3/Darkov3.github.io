@@ -2,13 +2,483 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	
+		
 	<title>Darkov GitHub</title>
+	
+	<link href="content/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<link href="content/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
+	<link href="content/jquery-ui.theme.min.css" rel="stylesheet" type="text/css">
+	<link href="content/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="content/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<link href="content/jquery.json-viewer.min.css" rel="stylesheet" type="text/css">
+	<link href="content/better-editables.min.css" rel="stylesheet" type="text/css">
+	<link href="content/demo.min.css" rel="stylesheet" type="text/css">
 
 </head>
 	<body>
 
-		Hello World!
+		<main class="container">
+			<header class="row jumbotron text-center header-box">
+				<h1>Better Editables Demo</h1>
+			</header>
+			<div class="row">
+				<h2>
+					Version in demo: 
+					<span id="versionSpan" class="text-info"></span>
+				</h2>
+			</div>
+			<div class="row">
+				<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#optionsDiv">Options</button>
+			</div>
+			<div id="optionsDiv" class="row collapse">
+
+				<div class="col-xs-12">
+					<div class="row">
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="modeOption" type='checkbox' class="checkbox-label" /> Popup Mode
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="buttonsOption" type='checkbox' class="checkbox-label" checked/> Buttons On
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="clearOption" type='checkbox' class="checkbox-label" checked/> Clear Button On
+							</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="validateOption" type='checkbox' class="checkbox-label" /> Value Required
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="tabOption" type='checkbox' class="checkbox-label" /> Tabbing On
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="dataOption" type='checkbox' class="checkbox-label" /> Send Data
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="errorOption" type='checkbox' class="checkbox-label" disabled/> Force Ajax Error
+							</label>
+						</div>
+					</div>
+
+					<div id="ajaxDataRow" class="row">
+						<div id="ajaxDataDiv" class='well ajax-info-panel'>
+							Ajax result viewer
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<hr/>
+			</div>
+			<div class="row">
+				<ul id="demoList" class="list-group list-items list-hover list-striped">
+
+					<li class="list-group-item header-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Type</div>
+							<div class="col-xs-3 list-item">Editable</div>
+							<div class="col-xs-5 list-item">Value</div>
+							<div class="col-xs-1 list-item">Code</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Default</div>
+							<div class="col-xs-3 list-item">
+								<span id='example1' data-pk="0" data-editable data-editable-first-tab data-tab-index="0"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example1" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code1" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Number</div>
+							<div class="col-xs-3 list-item">
+								<span id='example2' data-pk="1" data-editable data-tab-index="1"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example2" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code2" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item large-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Textarea</div>
+							<div class="col-xs-3 list-item">
+								<span id='example3' data-pk="2" data-editable data-tab-index="2"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example3" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code3" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Select</div>
+							<div class="col-xs-3 list-item">
+								<span id='example4' data-pk="3" data-editable data-tab-index="3"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example4" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code4" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Boolean</div>
+							<div class="col-xs-3 list-item">
+								<span id='example5' data-pk="4" data-editable data-tab-index="4"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example5" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code5" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Input Mask</div>
+							<div class="col-xs-3 list-item">
+								<span id='example6' data-pk="5" data-editable data-tab-index="5"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example6" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code6" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Autocomplete</div>
+							<div class="col-xs-3 list-item">
+								<span id='example7' data-pk="6" data-editable data-tab-index="6"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example7" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code7" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item datepicker-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Date Time Picker</div>
+							<div class="col-xs-3 list-item">
+								<span id='example8' data-pk="7" data-editable data-tab-index="7"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example8" class="value-span"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code8" class="glyphicon glyphicon-cog" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</main>
+
+		<script type="text/javascript" src="scripts/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+		<script type="text/javascript" src="scripts/moment-with-locales.min.js"></script>
+		<script type="text/javascript" src="scripts/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery.inputmask.bundle.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery.json-viewer.min.js"></script>
+		<script type="text/javascript" src="scripts/better-editables.min.js"></script>
+
+		<script type="text/javascript">
+
+			function makeSpaceForError() {
+				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && $('#modeOption:checked').length == 0;
+				$('#demoList .list-group-item').each(function(){
+					if (checked) {
+						if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item') && !$(this).hasClass('datepicker-item')) {
+							$(this).addClass('larger-item');
+						}
+					} else {
+						$(this).removeClass('larger-item');
+					}
+				});
+			}
+
+			$('#ajaxDataRow').hide();
+
+			$("#versionSpan").text($.betterEditableData.version);
+
+			$("#modeOption").on('change', function () {
+				var checked = $('#modeOption:checked').length > 0;
+				makeSpaceForError();
+				if (checked) {
+					$('[data-editable]').each(function(){
+						$(this).betterEditable('setOption', 'mode', 'popup');
+					});
+				} else {
+					$('[data-editable]').each(function(){
+						$(this).betterEditable('setOption', 'mode', 'inline');
+					});
+				}
+			});
+
+			$("#buttonsOption").on('change', function () {
+				var checked = $('#buttonsOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'buttonsOn', checked);
+				});
+			});
+
+			$("#clearOption").on('change', function () {
+				var checked = $('#clearOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'clearButton', checked);
+				});
+			});
+
+			$("#validateOption").on('change', function () {
+				var checked = $('#validateOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'submitNoChange', checked);
+					$(this).betterEditable('attachValidator', 'required', checked);
+				});
+				makeSpaceForError();
+			});
+
+			$("#tabOption").on('change', function () {
+				var checked = $('#tabOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'tabbingOn', checked);
+				});
+			});
+
+			$("#dataOption").on('change', function () {
+				var checked = $('#dataOption:checked').length > 0;
+				if (checked) {
+					$("#errorOption").removeAttr('disabled');
+					$('#ajaxDataRow').slideDown();
+				} else {
+					$("#errorOption").prop('checked', false).attr('disabled', '');
+					makeSpaceForError();
+					$('#ajaxDataRow').slideUp();
+				}
+				$('[data-editable]').each(function(){
+					if (checked) {
+						$(this).betterEditable('setOption', 'url', 'https://httpbin.org/post');
+					} else {
+						$(this).betterEditable('setOption', 'url', '');
+					}
+				});
+			});
+
+			$("#errorOption").on('change', function () {
+				var checked = $('#errorOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					if (checked) {
+						$(this).betterEditable('setOption', 'url', 'https://httpbin.org/get');
+					} else {
+						$(this).betterEditable('setOption', 'url', 'https://httpbin.org/post');
+					}
+				});
+				makeSpaceForError();
+			});
+
+			$('[data-editable]').each(function(){
+				var id = $(this).attr('id');
+				$(this).on('init', function(event, editable){
+					$('[data-show-val="' + id + '"]').text(editable.value);
+				});
+
+				$(this).on('hidden', function(event, editable){
+					var checked = $('#dataOption:checked').length > 0;
+					if (!checked) {
+						$('[data-show-val="' + id + '"]').text(editable.value);
+					}
+				});
+
+				$(this).on('onSuccess', function(event, eventData){
+					$('[data-show-val="' + id + '"]').text(eventData.editable.value);
+					$('#ajaxDataDiv').jsonViewer(eventData.data);
+				});
+
+				$(this).on('onError', function(event, eventData){
+					var jsonData = {
+						errorObj: eventData.errorObj,
+						xhr: eventData.xhr,
+						settings: eventData.settings,
+						exception: eventData.exception
+					}
+					$('#ajaxDataDiv').jsonViewer(jsonData);
+				});
+			});
+
+			$('#example1').betterEditable();
+
+			$('#example2').betterEditable({
+				type: 'number'
+			});
+
+			$('#example3').betterEditable({
+				type: 'textarea'
+			});
+
+			$('#example4').betterEditable({
+				type: 'select',
+				dataSource: [
+					{ value: "BG", text: "Bulgaria" },
+					{ value: "FR", text: "France" },
+					{ value: "GR", text: "Germany" },
+					{ value: "BEL", text: "Belgium" },
+					{ value: "SWE", text: "Sweden" }
+				]
+			});
+
+			$('#example5').betterEditable({
+				type: 'bool',
+				boolDisplay: function (editable, boolValue) {
+					if (boolValue) {
+						return "Truth";
+					} else {
+						return "Falsity";
+					}
+				}
+			});
+
+			$('#example6').betterEditable({
+				type: 'inputmask',
+				typeSettings: {
+					mask: "dd.mm.yyyy"
+				}
+			});
+
+			$('#example7').betterEditable({
+				type: 'autocomplete',
+				typeSettings: {
+					source: [
+						"VBScript", 
+						"Vedit", 
+						"TCL", 
+						"Tera Term", 
+						"thinBasic", 
+						"TypoScript", 
+						"StandardML", 
+						"StoneScript", 
+						"SuperCollider", 
+						"Vala", 
+						"VB.NET", 
+						"DCPU-16", 
+						"FO Language", 
+						"Formula One", 
+						"Fortran", 
+						"SystemVerilog", 
+						"T-SQL", 
+						"Swift"
+					]
+				}
+			});
+
+			$('#example8').betterEditable({
+				type: 'datetimepicker',
+				typeSettings: {
+					format: "dd/MM/YYYY HH:mm"
+				}
+			});
+
+			$('#code1').popover({
+				html: true,
+				content: "<pre>$('#example1').betterEditable();</pre>",
+				placement: 'left'
+			}); 
+
+			$('#code2').popover({
+				html: true,
+				content: "<pre>$('#example2').betterEditable({<br/><div class='tab'></div>type: 'number'<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code3').popover({
+				html: true,
+				content: "<pre>$('#example2').betterEditable({<br/><div class='tab'></div>type: 'textarea'<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code4').popover({
+				html: true,
+				content: "<pre>$('#example4').betterEditable({<br/><div class='tab'></div>type: 'select',<br/><div class='tab'></div>dataSource: [<br/><div class='tab'></div><div class='tab'></div>{ value: 'BG', text: 'Bulgaria' },<br/><div class='tab'></div><div class='tab'></div>{ value: 'FR', text: 'France' },<br/><div class='tab'></div><div class='tab'></div>{ value: 'GR', text: 'Germany' },<br/><div class='tab'></div><div class='tab'></div>{ value: 'BEL', text: 'Belgium' },<br/><div class='tab'></div><div class='tab'></div>{ value: 'SWE', text: 'Sweden' }<br/><div class='tab'></div>]<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code5').popover({
+				html: true,
+				content: "<pre>$('#example5').betterEditable({<br/><div class='tab'></div>type: 'bool',<br/><div class='tab'></div>boolDisplay: function (editable, boolValue) {<br/><div class='tab'></div><div class='tab'></div>if (boolValue) {<br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>return 'Truth';<br/><div class='tab'></div><div class='tab'></div>} else {<br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>return 'Falsity';<br/><div class='tab'></div><div class='tab'></div>}<br/><div class='tab'></div>}<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code6').popover({
+				html: true,
+				content: "<pre>$('#example6').betterEditable({<br/><div class='tab'></div>type: 'inputmask',<br/><div class='tab'></div>typeSettings: {<br/><div class='tab'></div><div class='tab'></div>mask: 'dd.mm.yyyy'<br/><div class='tab'></div>}<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code7').popover({
+				html: true,
+				content: "<pre>$('#example7').betterEditable({<br/><div class='tab'></div>type: 'autocomplete',<br/><div class='tab'></div>typeSettings: {<br/><div class='tab'></div><div class='tab'></div>source: [<br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'VBScript', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Vedit', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'TCL', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Tera Term', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'thinBasic', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'TypoScript', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'StandardML', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'StoneScript', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'SuperCollider', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Vala', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'VB.NET', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'DCPU-16', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'FO Language', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Formula One', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Fortran', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'SystemVerilog', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'T-SQL', <br/><div class='tab'></div><div class='tab'></div><div class='tab'></div>'Swift'<br/><div class='tab'></div><div class='tab'></div>]<br/><div class='tab'></div>}<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code8').popover({
+				html: true,
+				content: "<pre>$('#example8').betterEditable({<br/><div class='tab'></div>type: 'datetimepicker',<br/><div class='tab'></div>typeSettings: {<br/><div class='tab'></div><div class='tab'></div>format: 'dd/MM/YYYY HH:mm'<br/><div class='tab'></div>}<br/>});</pre>",
+				placement: 'left'
+			});
+
+		</script>
 
 	</body>
 </html>
