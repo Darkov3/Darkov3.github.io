@@ -279,15 +279,18 @@
 				});
 
 				if (!errorChecked) {
-					$('.editable-error').each(function(){
-						$(this).hide();
-					});
-					if ($('#blurOption:checked').length > 0) {
-						setTimeout(function(){
-							$('.editable-error').each(function(){
-								$(this).hide();
-							});
-						}, 600);
+					$('.list-group-item.boolean-item .editable-error').hide();
+					if ($('#modeOption:checked').length == 0) {
+						$('.editable-error').each(function(){
+							$(this).hide();
+						});
+						if ($('#blurOption:checked').length > 0) {
+							setTimeout(function(){
+								$('.editable-error').each(function(){
+									$(this).hide();
+								});
+							}, 600);
+						}
 					}
 				}
 			}
