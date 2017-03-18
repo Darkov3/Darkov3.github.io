@@ -150,7 +150,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item large-item">
+					<li id="texareaListItem" class="list-group-item large-item">
 						<div class="row">
 							<div class="col-xs-3 list-item">Textarea</div>
 							<div class="col-xs-3 list-item">
@@ -225,7 +225,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item datepicker-item">
+					<li id="dateTimePickerListItem" class="list-group-item mega-large-item">
 						<div class="row">
 							<div class="col-xs-3 list-item">Date Time Picker</div>
 							<div class="col-xs-3 list-item">
@@ -259,7 +259,7 @@
 				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && $('#modeOption:checked').length == 0;
 				$('#demoList .list-group-item').each(function(){
 					if (checked) {
-						if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item') && !$(this).hasClass('datepicker-item')) {
+						if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
 							$(this).addClass('larger-item');
 						}
 					} else {
@@ -279,10 +279,21 @@
 					$('[data-editable]').each(function(){
 						$(this).betterEditable('setOption', 'mode', 'popup');
 					});
+
+					$("#dateTimePickerListItem").removeClass('mega-large-item');
+					$("#texareaListItem").removeClass('large-item');
 				} else {
 					$('[data-editable]').each(function(){
 						$(this).betterEditable('setOption', 'mode', 'inline');
 					});
+
+					if (!$("#dateTimePickerListItem").hasClass('mega-large-item')) {
+						$("#dateTimePickerListItem").addClass('mega-large-item');
+					}
+					
+					if (!$("#texareaListItem").hasClass('large-item')) {
+						$("#texareaListItem").addClass('large-item');
+					}
 				}
 			});
 
