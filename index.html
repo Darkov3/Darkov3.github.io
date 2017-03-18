@@ -51,6 +51,24 @@
 								<input id="clearOption" type='checkbox' class="checkbox-label" checked/> Clear Button On
 							</label>
 						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="blurOption" type='checkbox' class="checkbox-label" checked/> Submit On Blur
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="changeOption" type='checkbox' class="checkbox-label"/> Submit Same Value
+							</label>
+						</div>
+
+						<div class="col-md-2">
+							<label class="checkbox-label">
+								<input id="readonlyOption" type='checkbox' class="checkbox-label" checked/> Editables Enabled
+							</label>
+						</div>
 					</div>
 
 					<div class="row">
@@ -282,10 +300,30 @@
 				});
 			});
 
+			$("#blurOption").on('change', function () {
+				var checked = $('#blurOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'submitOnBlur', checked);
+				});
+			});
+
+			$("#changeOption").on('change', function () {
+				var checked = $('#changeOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'submitNoChange', checked);
+				});
+			});
+
+			$("#readonlyOption").on('change', function () {
+				var checked = $('#readonlyOption:checked').length > 0;
+				$('[data-editable]').each(function(){
+					$(this).betterEditable('setOption', 'readOnly', !checked);
+				});
+			});
+
 			$("#validateOption").on('change', function () {
 				var checked = $('#validateOption:checked').length > 0;
 				$('[data-editable]').each(function(){
-					$(this).betterEditable('setOption', 'submitNoChange', checked);
 					$(this).betterEditable('attachValidator', 'required', checked);
 				});
 				makeSpaceForError();
