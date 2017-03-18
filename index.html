@@ -180,7 +180,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item">
+					<li class="list-group-item boolean-item">
 						<div class="row">
 							<div class="col-xs-3 list-item">Boolean</div>
 							<div class="col-xs-3 list-item">
@@ -257,15 +257,39 @@
 
 			function makeSpaceForError() {
 				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && $('#modeOption:checked').length == 0;
+				var errorChecked = $('#errorOption:checked').length > 0;
 				$('#demoList .list-group-item').each(function(){
-					if (checked) {
-						if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
-							$(this).addClass('larger-item');
+					if (!$(this).hasClass('boolean-item')) {
+						if (checked) {
+							if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
+								$(this).addClass('larger-item');
+							}
+						} else {
+							$(this).removeClass('larger-item');
 						}
 					} else {
-						$(this).removeClass('larger-item');
+						if (errorChecked) {
+							if (!$(this).hasClass('larger-item')) {
+								$(this).addClass('larger-item');
+							}
+						} else {
+							$(this).removeClass('larger-item');
+						}
 					}
 				});
+
+				if (!errorChecked) {
+					$('.editable-error').each(function(){
+						$(this).hide();
+					});
+					if ($('#blurOption:checked').length > 0) {
+						setTimeout(function(){
+							$('.editable-error').each(function(){
+								$(this).hide();
+							});
+						}, 600);
+					}
+				}
 			}
 
 			$('#ajaxDataRow').hide();
@@ -290,7 +314,7 @@
 					if (!$("#dateTimePickerListItem").hasClass('mega-large-item')) {
 						$("#dateTimePickerListItem").addClass('mega-large-item');
 					}
-					
+
 					if (!$("#texareaListItem").hasClass('large-item')) {
 						$("#texareaListItem").addClass('large-item');
 					}
