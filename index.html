@@ -256,27 +256,48 @@
 		<script type="text/javascript">
 
 			function makeSpaceForError() {
-				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && $('#modeOption:checked').length == 0;
+				var readonlyChecked = $('#readonlyOption:checked').length > 0;
+				var popupChecked = $('#modeOption:checked').length > 0;
+				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && !popupChecked;
 				var errorChecked = $('#errorOption:checked').length > 0;
-				$('#demoList .list-group-item').each(function(){
-					if (!$(this).hasClass('boolean-item')) {
-						if (checked) {
-							if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
-								$(this).addClass('larger-item');
-							}
-						} else {
-							$(this).removeClass('larger-item');
-						}
-					} else {
-						if (errorChecked) {
-							if (!$(this).hasClass('larger-item')) {
-								$(this).addClass('larger-item');
-							}
-						} else {
-							$(this).removeClass('larger-item');
-						}
+
+				if (popupChecked || !readonlyChecked) {
+					$("#dateTimePickerListItem").removeClass('mega-large-item');
+					$("#texareaListItem").removeClass('large-item');
+				} else {
+					if (!$("#dateTimePickerListItem").hasClass('mega-large-item')) {
+						$("#dateTimePickerListItem").addClass('mega-large-item');
 					}
-				});
+
+					if (!$("#texareaListItem").hasClass('large-item')) {
+						$("#texareaListItem").addClass('large-item');
+					}
+				}
+				if (!readonlyChecked) {
+					$('#demoList .list-group-item').each(function(){
+						$(this).removeClass('larger-item');
+					});
+				} else {
+					$('#demoList .list-group-item').each(function(){
+						if (!$(this).hasClass('boolean-item')) {
+							if (checked) {
+								if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
+									$(this).addClass('larger-item');
+								}
+							} else {
+								$(this).removeClass('larger-item');
+							}
+						} else {
+							if (errorChecked) {
+								if (!$(this).hasClass('larger-item')) {
+									$(this).addClass('larger-item');
+								}
+							} else {
+								$(this).removeClass('larger-item');
+							}
+						}
+					});
+				}
 
 				if (!errorChecked) {
 					$('.list-group-item.boolean-item .editable-error').hide();
@@ -301,27 +322,16 @@
 
 			$("#modeOption").on('change', function () {
 				var checked = $('#modeOption:checked').length > 0;
-				makeSpaceForError();
 				if (checked) {
 					$('[data-editable]').each(function(){
 						$(this).betterEditable('setOption', 'mode', 'popup');
 					});
-
-					$("#dateTimePickerListItem").removeClass('mega-large-item');
-					$("#texareaListItem").removeClass('large-item');
 				} else {
 					$('[data-editable]').each(function(){
 						$(this).betterEditable('setOption', 'mode', 'inline');
 					});
-
-					if (!$("#dateTimePickerListItem").hasClass('mega-large-item')) {
-						$("#dateTimePickerListItem").addClass('mega-large-item');
-					}
-
-					if (!$("#texareaListItem").hasClass('large-item')) {
-						$("#texareaListItem").addClass('large-item');
-					}
 				}
+				makeSpaceForError();
 			});
 
 			$("#buttonsOption").on('change', function () {
@@ -357,6 +367,7 @@
 				$('[data-editable]').each(function(){
 					$(this).betterEditable('setOption', 'readOnly', !checked);
 				});
+				makeSpaceForError();
 			});
 
 			$("#validateOption").on('change', function () {
@@ -407,28 +418,29 @@
 
 			$('[data-editable]').each(function(){
 				var id = $(this).attr('id');
-				$(this).on('init', function(event, editable){
+				$(this).on('be.init', function(event, editable){
 					$('[data-show-val="' + id + '"]').text(editable.value);
 				});
 
-				$(this).on('hidden', function(event, editable){
+				$(this).on('be.change', function(event, eventData){
 					var checked = $('#dataOption:checked').length > 0;
 					if (!checked) {
-						$('[data-show-val="' + id + '"]').text(editable.value);
+						$('[data-show-val="' + id + '"]').text(eventData.newValue);
 					}
 				});
 
-				$(this).on('onSuccess', function(event, eventData){
+				$(this).on('be.ajaxSuccess', function(event, eventData){
 					$('[data-show-val="' + id + '"]').text(eventData.editable.value);
 					$('#ajaxDataDiv').jsonViewer(eventData.data);
 				});
 
-				$(this).on('onError', function(event, eventData){
+				$(this).on('be.ajaxError', function(event, eventData){
 					var jsonData = {
 						errorObj: eventData.errorObj,
 						xhr: eventData.xhr,
 						settings: eventData.settings,
-						exception: eventData.exception
+						exception: eventData.exception,
+						errorValue: eventData.errorValue
 					}
 					$('#ajaxDataDiv').jsonViewer(jsonData);
 				});
