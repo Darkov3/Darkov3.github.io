@@ -120,7 +120,7 @@
 						</div>
 					</li>
 
-					<li class="list-group-item">
+					<li class="list-group-item js-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Default</div>
 							<div class="col-xs-3 list-item">
@@ -135,7 +135,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item">
+					<li class="list-group-item js-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Number</div>
 							<div class="col-xs-3 list-item">
@@ -150,7 +150,7 @@
 						</div>
 					</li>
 				
-					<li id="texareaListItem" class="list-group-item large-item">
+					<li class="list-group-item large-item js-error-space js-area-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Textarea</div>
 							<div class="col-xs-3 list-item">
@@ -165,7 +165,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item">
+					<li class="list-group-item js-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Select</div>
 							<div class="col-xs-3 list-item">
@@ -180,7 +180,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item boolean-item">
+					<li class="list-group-item js-ajax-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Boolean</div>
 							<div class="col-xs-3 list-item">
@@ -195,7 +195,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item">
+					<li class="list-group-item js-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Input Mask</div>
 							<div class="col-xs-3 list-item">
@@ -210,7 +210,7 @@
 						</div>
 					</li>
 				
-					<li class="list-group-item">
+					<li class="list-group-item js-error-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Autocomplete</div>
 							<div class="col-xs-3 list-item">
@@ -225,7 +225,7 @@
 						</div>
 					</li>
 				
-					<li id="dateTimePickerListItem" class="list-group-item mega-large-item">
+					<li class="list-group-item mega-large-item js-error-space js-large-space">
 						<div class="row">
 							<div class="col-xs-3 list-item">Date Time Picker</div>
 							<div class="col-xs-3 list-item">
@@ -236,6 +236,21 @@
 							</div>
 							<div class="col-xs-1 list-item option-item">
 								<span id="code7" class="glyphicon glyphicon-cog code-button" data-toggle="collapse"></span>
+							</div>
+						</div>
+					</li>
+				
+					<li class="list-group-item mega-large-item">
+						<div class="row">
+							<div class="col-xs-3 list-item">Multiple Fields</div>
+							<div class="col-xs-3 list-item">
+								<span id='example8' data-pk="8" data-editable data-tab-index="8"></span>
+							</div>
+							<div class="col-xs-5 list-item option-item">
+								<span data-show-val="example8" class="value-span js-show-object object-type"></span>
+							</div>
+							<div class="col-xs-1 list-item option-item">
+								<span id="code8" class="glyphicon glyphicon-cog code-button" data-toggle="collapse"></span>
 							</div>
 						</div>
 					</li>
@@ -256,61 +271,79 @@
 		<script type="text/javascript">
 
 			function makeSpaceForError() {
-				var readonlyChecked = $('#readonlyOption:checked').length > 0;
+				var enabledChecked = $('#readonlyOption:checked').length > 0;
 				var popupChecked = $('#modeOption:checked').length > 0;
-				var checked = ($('#validateOption:checked').length > 0 || $('#errorOption:checked').length > 0) && !popupChecked;
+				var validateChecked = $('#validateOption:checked').length > 0;
 				var errorChecked = $('#errorOption:checked').length > 0;
+				var blurChecked = $('#blurOption:checked').length > 0;
 
-				if (popupChecked || !readonlyChecked) {
-					$("#dateTimePickerListItem").removeClass('mega-large-item');
-					$("#texareaListItem").removeClass('large-item');
-				} else {
-					if (!$("#dateTimePickerListItem").hasClass('mega-large-item')) {
-						$("#dateTimePickerListItem").addClass('mega-large-item');
-					}
-
-					if (!$("#texareaListItem").hasClass('large-item')) {
-						$("#texareaListItem").addClass('large-item');
-					}
-				}
-				if (!readonlyChecked) {
-					$('#demoList .list-group-item').each(function(){
+				if (!enabledChecked) {
+					$(".js-large-space").each(function(){
+						$(this).removeClass('mega-large-item');
+					});
+					$(".js-area-space").each(function(){
+						$(this).removeClass('large-item');
+					});
+					$(".js-ajax-error-space").each(function(){
+						$(this).removeClass('larger-item');
+					});
+					$(".js-error-space").each(function(){
 						$(this).removeClass('larger-item');
 					});
 				} else {
-					$('#demoList .list-group-item').each(function(){
-						if (!$(this).hasClass('boolean-item')) {
-							if (checked) {
-								if (!$(this).hasClass('larger-item') && !$(this).hasClass('header-item')) {
-									$(this).addClass('larger-item');
-								}
-							} else {
-								$(this).removeClass('larger-item');
-							}
-						} else {
-							if (errorChecked) {
+					if (popupChecked) {
+						$(".js-large-space").each(function(){
+							$(this).removeClass('mega-large-item');
+						});
+						$(".js-area-space").each(function(){
+							$(this).removeClass('large-item');
+						});
+						$(".js-error-space").each(function(){
+							$(this).removeClass('larger-item');
+						});
+						if (errorChecked) {
+							$(".js-ajax-error-space").each(function(){
 								if (!$(this).hasClass('larger-item')) {
 									$(this).addClass('larger-item');
 								}
-							} else {
+							});
+						} else {
+							$(".js-ajax-error-space").each(function(){
 								$(this).removeClass('larger-item');
-							}
+							});
 						}
-					});
-				}
-
-				if (!errorChecked) {
-					$('.list-group-item.boolean-item .editable-error').hide();
-					if ($('#modeOption:checked').length == 0) {
-						$('.editable-error').each(function(){
-							$(this).hide();
+					} else {
+						$(".js-large-space").each(function(){
+							if (!$(this).hasClass('mega-large-item')) {
+								$(this).addClass('mega-large-item');
+							}
 						});
-						if ($('#blurOption:checked').length > 0) {
-							setTimeout(function(){
-								$('.editable-error').each(function(){
-									$(this).hide();
-								});
-							}, 600);
+						$(".js-area-space").each(function(){
+							if (!$(this).hasClass('large-item')) {
+								$(this).addClass('large-item');
+							}
+						});
+						if (validateChecked || errorChecked) {
+							$(".js-error-space").each(function(){
+								if (!$(this).hasClass('larger-item')) {
+									$(this).addClass('larger-item');
+								}
+							});
+						} else {
+							$(".js-error-space").each(function(){
+								$(this).removeClass('larger-item');
+							});
+						}
+						if (errorChecked) {
+							$(".js-ajax-error-space").each(function(){
+								if (!$(this).hasClass('larger-item')) {
+									$(this).addClass('larger-item');
+								}
+							});
+						} else {
+							$(".js-ajax-error-space").each(function(){
+								$(this).removeClass('larger-item');
+							});
 						}
 					}
 				}
@@ -423,15 +456,15 @@
 				});
 
 				$(this).on('be.change', function(event, eventData){
-					var checked = $('#dataOption:checked').length > 0;
-					if (!checked) {
+					if (eventData.newValue !== null && typeof eventData.newValue === 'object' && $('[data-show-val="' + id + '"]').hasClass('js-show-object')) {
+						$('[data-show-val="' + id + '"]').jsonViewer(eventData.newValue);
+					} else {
 						$('[data-show-val="' + id + '"]').text(eventData.newValue);
 					}
 				});
 
 				$(this).on('be.ajaxSuccess', function(event, eventData){
-					$('[data-show-val="' + id + '"]').text(eventData.editable.value);
-					$('#ajaxDataDiv').jsonViewer(eventData.data);
+					$('#ajaxDataDiv').jsonViewer(eventData.response);
 				});
 
 				$(this).on('be.ajaxError', function(event, eventData){
@@ -458,7 +491,7 @@
 
 			$('#example3').betterEditable({
 				type: 'select',
-				dataSource: [
+				typeSettings: [
 					{ value: "BG", text: "Bulgaria" },
 					{ value: "FR", text: "France" },
 					{ value: "GR", text: "Germany" },
@@ -518,6 +551,17 @@
 				}
 			});
 
+			$('#example8').betterEditable({
+				type: 'multifield',
+				typeSettings: {
+					FullName: ["text", "Name:"],
+					Age: "number",
+					Biography: ["textarea"],
+					CanDrive: ["checkbox", "have driving licence"],
+					password: ["password", "Type in your password:"]
+				}
+			});
+
 			$('#code0').popover({
 				html: true,
 				content: "<pre>$('#example0').betterEditable();</pre>",
@@ -563,6 +607,12 @@
 			$('#code7').popover({
 				html: true,
 				content: "<pre>$('#example7').betterEditable({<br/><div class='tab'></div>type: 'datetimepicker',<br/><div class='tab'></div>typeSettings: {<br/><div class='tab'></div><div class='tab'></div>format: 'dd/MM/YYYY HH:mm'<br/><div class='tab'></div>}<br/>});</pre>",
+				placement: 'left'
+			});
+
+			$('#code8').popover({
+				html: true,
+				content: "<pre>$('#example8').betterEditable({<br/><div class='tab'></div>type: 'multifield',<br/><div class='tab'></div>typeSettings: {<br/><div class='tab'></div><div class='tab'></div>FullName: ['text', 'Name:'],<br/><div class='tab'></div><div class='tab'></div>Age: 'number',<br/><div class='tab'></div><div class='tab'></div>Biography: ['textarea'],<br/><div class='tab'></div><div class='tab'></div>CanDrive: ['checkbox', 'have driving licence'],<br/><div class='tab'></div><div class='tab'></div>password: ['password', 'Type in your password:']<br/><div class='tab'></div>}<br/>});</pre>",
 				placement: 'left'
 			});
 
